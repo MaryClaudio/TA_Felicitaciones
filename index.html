@@ -30,8 +30,7 @@
             width: 320px;
             height: 200px;
             background-color: #f03e3e;
-            border-bottom-left-radius: 15px;
-            border-bottom-right-radius: 15px;
+            border-radius: 15px;
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
         }
 
@@ -91,75 +90,88 @@
         /* La Carta Secreta */
         .card {
             position: absolute;
-            top: 10px;
-            left: 15px;
+            left: 50%;
+            transform: translateX(-50%) translateY(0) scale(0.85);
+            bottom: 10px;
             background: #fff0f6;
             width: 290px;
-            padding: 20px;
+            padding: 20px 0; 
             border-radius: 20px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
             text-align: center;
             opacity: 0;
-            transform: translateY(0) scale(0.85);
             transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease;
             z-index: 2;
             border: 2px dashed #ff8787;
             box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        /* Animación para que la carta se eleve */
+        /* Animación para que la carta se desplace hacia abajo */
         .envelope.open .card {
             opacity: 1;
-            transform: translateY(-280px) scale(1.05);
+            transform: translateX(-50%) translateY(205px) scale(1.05); 
             z-index: 5;
         }
 
         /* Imagen de la pareja */
         .couple-img {
-            width: 100%;
-            height: 140px;
-            object-fit: cover;
+            max-width: 90%;
+            height: auto;
             border-radius: 12px;
             border: 2px solid #ffb3c6;
             margin-bottom: 12px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            object-fit: cover;
         }
 
-        h1 {
+        /* Estilo para el título del mensaje */
+        .message-title {
             color: #d6336c;
             font-size: 19px;
             margin: 5px 0 10px 0;
         }
 
-        p {
+        /* Estilo para el cuerpo del mensaje */
+        .message-body {
             color: #495057;
             font-size: 13.5px;
             line-height: 1.5;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
+            max-width: 85%;
         }
 
         /* Botón de Beso */
         .kiss-btn {
-            background: linear-gradient(135deg, #ff4d6d, #ff758f);
+            background-color: #ff708e;
             color: white;
             border: none;
-            padding: 8px 16px;
-            font-size: 13px;
+            padding: 10px 20px;
+            font-size: 14px;
             font-weight: bold;
-            border-radius: 20px;
+            border-radius: 25px;
             cursor: pointer;
-            box-shadow: 0 4px 10px rgba(255, 77, 109, 0.3);
+            box-shadow: 0 4px 10px rgba(255, 112, 142, 0.3);
             transition: transform 0.2s, box-shadow 0.2s;
             outline: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .kiss-btn:hover {
             transform: scale(1.05);
-            box-shadow: 0 6px 15px rgba(255, 77, 109, 0.4);
+            box-shadow: 0 6px 15px rgba(255, 112, 142, 0.4);
         }
 
         .kiss-btn:active {
             transform: scale(0.95);
+        }
+
+        .kiss-icon {
+            font-size: 18px;
         }
 
         /* Partículas de besos volando */
@@ -213,46 +225,43 @@
             
             <!-- CONTENIDO DE LA CARTA -->
             <div class="card" id="carta" onclick="event.stopPropagation();">
-                <!-- Imagen de pareja integrada -->
+                <!-- Tu foto de pareja con el nombre correcto -->
                 <img src="imagen-01.png" alt="Nosotros" class="couple-img">
                 
-                <h1>Para el amor de mi vida ✨</h1>
-                <p>Quería recordarte lo increíblemente feliz que me siento a tu lado. Cada momento juntos es un regalo hermoso y me llena el corazón. Sé que vamos a lograr muchísimas cosas maravillosas juntos. ¡Te amo mucho mucho mucho! 💖</p>
+                <h1 class="message-title">Para el amor de mi vida ✨</h1>
+                <p class="message-body">Quería recordarte lo increíblemente feliz que me siento a tu lado. Cada momento juntos es un regalo hermoso y me llena el corazón. Sé que vamos a lograr muchísimas cosas maravillosas juntos. ¡Te amo mucho mucho mucho! 💖</p>
                 
                 <!-- Botón interactivo de besos -->
-                <button class="kiss-btn" onclick="lanzarBesos(event)">💋 ¡Dame un besito!</button>
+                <button class="kiss-btn" onclick="lanzarBesos(event)">
+                    <span class="kiss-icon">💋</span> ¡Dame un besito!
+                </button>
             </div>
         </div>
         <div class="indicador">👉 ¡HAZ CLIC PARA ABRIR! 👈</div>
     </div>
 
-    <!-- Música de fondo romántica y suave -->
-    <audio id="musica" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" loop></audio>
+    <!-- Música de fondo: Melodía romántica y dulce de piano -->
+    <audio id="musica" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3" loop></audio>
 
     <script>
         function abrirCarta() {
             const sobre = document.getElementById('sobre');
             
-            // Si ya está abierto, no hace nada nuevo
             if(sobre.classList.contains('open')) return;
 
             sobre.classList.add('open');
 
-            // Intenta reproducir la música al hacer clic
             const musica = document.getElementById('musica');
-            musica.volume = 0.4; // Volumen suave
+            musica.volume = 0.4; 
             musica.play().catch(err => console.log("Auto-play bloqueado por el navegador."));
 
-            // Iniciar la lluvia suave de corazones de fondo
             setInterval(crearCorazon, 400);
         }
 
         function lanzarBesos(event) {
-            // Conseguir la posición del cursor al hacer clic
             const x = event.clientX;
             const y = event.clientY;
 
-            // Lanzar múltiples besitos voladores
             for (let i = 0; i < 15; i++) {
                 const besito = document.createElement('div');
                 besito.classList.add('besito-particle');
@@ -260,9 +269,8 @@
                 besito.style.left = x + 'px';
                 besito.style.top = y + 'px';
 
-                // Generar direcciones aleatorias explosivas (puntos cardinales)
                 const dx = (Math.random() - 0.5) * 350 + 'px';
-                const dy = (Math.random() - 0.7) * 350 - 50 + 'px'; // Vuelan ligeramente más hacia arriba
+                const dy = (Math.random() - 0.7) * 350 - 50 + 'px'; 
                 const rot = (Math.random() - 0.5) * 120 + 'deg';
 
                 besito.style.setProperty('--dx', dx);
@@ -271,7 +279,6 @@
 
                 document.body.appendChild(besito);
 
-                // Remover la partícula después de que termine la animación
                 setTimeout(() => {
                     besito.remove();
                 }, 1200);
@@ -296,6 +303,3 @@
     </script>
 </body>
 </html>
-```eof
-
----
