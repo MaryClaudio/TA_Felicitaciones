@@ -3,109 +3,290 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>¡Una sorpresa para ti!</title>
+    <title>Para mi novio hermoso ❤️</title>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #ffe5ec, #ffb3c6);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, #ffe3e3, #fcc2d7);
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             margin: 0;
             overflow: hidden;
+            position: relative;
         }
 
-        .card {
-            background: white;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            text-align: center;
-            max-width: 400px;
-            animation: aparecer 1s ease-out;
-        }
-
-        h1 {
-            color: #ff4d6d;
-            font-size: 24px;
-        }
-
-        p {
-            color: #4f5d75;
-            font-size: 18px;
-        }
-
-        .btn {
-            background-color: #ff4d6d;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            font-size: 16px;
-            border-radius: 25px;
+        /* Contenedor del sobre */
+        .envelope-wrapper {
+            position: relative;
             cursor: pointer;
-            transition: transform 0.2s, background-color 0.2s;
-            box-shadow: 0 5px 10px rgba(255, 77, 109, 0.3);
+            animation: flotarSobre 3s ease-in-out infinite;
+            z-index: 10;
         }
 
-        .btn:hover {
-            transform: scale(1.1);
-            background-color: #ff758f;
+        .envelope {
+            position: relative;
+            width: 320px;
+            height: 200px;
+            background-color: #f03e3e;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
         }
 
-        /* Animación de entrada */
-        @keyframes aparecer {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Corazones flotantes */
-        .corazon {
+        /* Solapa del sobre */
+        .envelope::before {
+            content: '';
             position: absolute;
-            color: #ffb3c6;
-            font-size: 24px;
-            animation: flotar 4s linear infinite;
-            bottom: -50px;
+            top: 0;
+            left: 0;
+            border-left: 160px solid transparent;
+            border-right: 160px solid transparent;
+            border-top: 110px solid #c92a2a;
+            transform-origin: top;
+            transition: transform 0.4s ease;
+            z-index: 3;
+        }
+
+        /* Efecto de apertura de la solapa */
+        .envelope.open::before {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+
+        /* El corazón que sella el sobre */
+        .heart-seal {
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(1);
+            font-size: 50px;
+            z-index: 4;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .envelope.open .heart-seal {
+            transform: translate(-50%, -50%) scale(0);
             opacity: 0;
         }
 
-        @keyframes flotar {
-            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        /* Texto indicador */
+        .indicador {
+            position: absolute;
+            bottom: -45px;
+            width: 100%;
+            text-align: center;
+            color: #c92a2a;
+            font-weight: bold;
+            font-size: 14px;
+            letter-spacing: 1px;
+            transition: opacity 0.3s;
+        }
+
+        .envelope.open + .indicador {
+            opacity: 0;
+        }
+
+        /* La Carta Secreta */
+        .card {
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            background: #fff0f6;
+            width: 290px;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+            opacity: 0;
+            transform: translateY(0) scale(0.85);
+            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease;
+            z-index: 2;
+            border: 2px dashed #ff8787;
+            box-sizing: border-box;
+        }
+
+        /* Animación para que la carta se eleve */
+        .envelope.open .card {
+            opacity: 1;
+            transform: translateY(-280px) scale(1.05);
+            z-index: 5;
+        }
+
+        /* Imagen de la pareja */
+        .couple-img {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 2px solid #ffb3c6;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        h1 {
+            color: #d6336c;
+            font-size: 19px;
+            margin: 5px 0 10px 0;
+        }
+
+        p {
+            color: #495057;
+            font-size: 13.5px;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        /* Botón de Beso */
+        .kiss-btn {
+            background: linear-gradient(135deg, #ff4d6d, #ff758f);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: bold;
+            border-radius: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(255, 77, 109, 0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
+            outline: none;
+        }
+
+        .kiss-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(255, 77, 109, 0.4);
+        }
+
+        .kiss-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Partículas de besos volando */
+        .besito-particle {
+            position: absolute;
+            font-size: 45px;
+            pointer-events: none;
+            z-index: 9999;
+            animation: volarBesito 1.2s ease-out forwards;
+        }
+
+        @keyframes volarBesito {
+            0% {
+                transform: translate(-50%, -50%) scale(0.3) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.5) rotate(var(--rot));
+                opacity: 0;
+            }
+        }
+
+        /* Animaciones estéticas generales */
+        @keyframes flotarSobre {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .corazon-flotante {
+            position: absolute;
+            color: #ff8787;
+            font-size: 20px;
+            animation: lluvia 4s linear infinite;
+            bottom: -50px;
+            opacity: 0;
+            z-index: 1;
+        }
+
+        @keyframes lluvia {
+            0% { transform: translateY(0) scale(0.5); opacity: 0; }
+            15% { opacity: 0.8; }
+            100% { transform: translateY(-105vh) rotate(360deg) scale(1.2); opacity: 0; }
         }
     </style>
 </head>
 <body>
 
-    <div class="card">
-        <h1>¡Hola! Tengo un mensaje para ti... 🌸</h1>
-        <p>Hoy es un día especial y quería recordarte lo increíble que eres. ¡Gracias por estar en mi vida!</p>
-        <button class="btn" onclick="mostrarSorpresa()">¡Haz clic aquí!</button>
+    <div class="envelope-wrapper" onclick="abrirCarta()">
+        <div class="envelope" id="sobre">
+            <div class="heart-seal">❤️</div>
+            
+            <!-- CONTENIDO DE LA CARTA -->
+            <div class="card" id="carta" onclick="event.stopPropagation();">
+                <!-- Imagen de pareja integrada -->
+                <img src="imagen-01.png" alt="Nosotros" class="couple-img">
+                
+                <h1>Para el amor de mi vida ✨</h1>
+                <p>Quería recordarte lo increíblemente feliz que me siento a tu lado. Cada momento juntos es un regalo hermoso y me llena el corazón. Sé que vamos a lograr muchísimas cosas maravillosas juntos. ¡Te amo mucho mucho mucho! 💖</p>
+                
+                <!-- Botón interactivo de besos -->
+                <button class="kiss-btn" onclick="lanzarBesos(event)">💋 ¡Dame un besito!</button>
+            </div>
+        </div>
+        <div class="indicador">👉 ¡HAZ CLIC PARA ABRIR! 👈</div>
     </div>
 
-    <audio id="musica" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop></audio>
+    <!-- Música de fondo romántica y suave -->
+    <audio id="musica" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" loop></audio>
 
     <script>
-        function mostrarSorpresa() {
-            // Reproducir música
-            const musica = document.getElementById('musica');
-            musica.play().catch(error => console.log("El navegador bloqueó el auto-play, se necesita interacción."));
-
-            // Cambiar el texto de la tarjeta
-            document.querySelector('p').innerHTML = "✨ ¡Que todos tus deseos se cumplan hoy y siempre! Eres genial. ✨";
+        function abrirCarta() {
+            const sobre = document.getElementById('sobre');
             
-            // Generar lluvia de corazones
+            // Si ya está abierto, no hace nada nuevo
+            if(sobre.classList.contains('open')) return;
+
+            sobre.classList.add('open');
+
+            // Intenta reproducir la música al hacer clic
+            const musica = document.getElementById('musica');
+            musica.volume = 0.4; // Volumen suave
+            musica.play().catch(err => console.log("Auto-play bloqueado por el navegador."));
+
+            // Iniciar la lluvia suave de corazones de fondo
+            setInterval(crearCorazon, 400);
+        }
+
+        function lanzarBesos(event) {
+            // Conseguir la posición del cursor al hacer clic
+            const x = event.clientX;
+            const y = event.clientY;
+
+            // Lanzar múltiples besitos voladores
             for (let i = 0; i < 15; i++) {
-                setTimeout(crearCorazon, i * 200);
+                const besito = document.createElement('div');
+                besito.classList.add('besito-particle');
+                besito.innerText = '💋';
+                besito.style.left = x + 'px';
+                besito.style.top = y + 'px';
+
+                // Generar direcciones aleatorias explosivas (puntos cardinales)
+                const dx = (Math.random() - 0.5) * 350 + 'px';
+                const dy = (Math.random() - 0.7) * 350 - 50 + 'px'; // Vuelan ligeramente más hacia arriba
+                const rot = (Math.random() - 0.5) * 120 + 'deg';
+
+                besito.style.setProperty('--dx', dx);
+                besito.style.setProperty('--dy', dy);
+                besito.style.setProperty('--rot', rot);
+
+                document.body.appendChild(besito);
+
+                // Remover la partícula después de que termine la animación
+                setTimeout(() => {
+                    besito.remove();
+                }, 1200);
             }
         }
 
         function crearCorazon() {
             const corazon = document.createElement('div');
-            corazon.classList.add('corazon');
-            corazon.innerText = '❤️';
+            corazon.classList.add('corazon-flotante');
+            
+            const iconos = ['❤️', '💖', '🌸', '✨', '💕'];
+            corazon.innerText = iconos[Math.floor(Math.random() * iconos.length)];
+            
             corazon.style.left = Math.random() * 100 + 'vw';
-            corazon.style.animationDuration = (Math.random() * 2 + 2) + 's'; // Entre 2 y 4 segundos
+            corazon.style.animationDuration = (Math.random() * 2 + 3) + 's'; 
             document.body.appendChild(corazon);
 
             setTimeout(() => {
@@ -115,3 +296,6 @@
     </script>
 </body>
 </html>
+```eof
+
+---
