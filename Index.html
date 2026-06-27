@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Una sorpresa para ti!</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ffe5ec, #ffb3c6);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 400px;
+            animation: aparecer 1s ease-out;
+        }
+
+        h1 {
+            color: #ff4d6d;
+            font-size: 24px;
+        }
+
+        p {
+            color: #4f5d75;
+            font-size: 18px;
+        }
+
+        .btn {
+            background-color: #ff4d6d;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+            box-shadow: 0 5px 10px rgba(255, 77, 109, 0.3);
+        }
+
+        .btn:hover {
+            transform: scale(1.1);
+            background-color: #ff758f;
+        }
+
+        /* Animación de entrada */
+        @keyframes aparecer {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Corazones flotantes */
+        .corazon {
+            position: absolute;
+            color: #ffb3c6;
+            font-size: 24px;
+            animation: flotar 4s linear infinite;
+            bottom: -50px;
+            opacity: 0;
+        }
+
+        @keyframes flotar {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h1>¡Hola! Tengo un mensaje para ti... 🌸</h1>
+        <p>Hoy es un día especial y quería recordarte lo increíble que eres. ¡Gracias por estar en mi vida!</p>
+        <button class="btn" onclick="mostrarSorpresa()">¡Haz clic aquí!</button>
+    </div>
+
+    <audio id="musica" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop></audio>
+
+    <script>
+        function mostrarSorpresa() {
+            // Reproducir música
+            const musica = document.getElementById('musica');
+            musica.play().catch(error => console.log("El navegador bloqueó el auto-play, se necesita interacción."));
+
+            // Cambiar el texto de la tarjeta
+            document.querySelector('p').innerHTML = "✨ ¡Que todos tus deseos se cumplan hoy y siempre! Eres genial. ✨";
+            
+            // Generar lluvia de corazones
+            for (let i = 0; i < 15; i++) {
+                setTimeout(crearCorazon, i * 200);
+            }
+        }
+
+        function crearCorazon() {
+            const corazon = document.createElement('div');
+            corazon.classList.add('corazon');
+            corazon.innerText = '❤️';
+            corazon.style.left = Math.random() * 100 + 'vw';
+            corazon.style.animationDuration = (Math.random() * 2 + 2) + 's'; // Entre 2 y 4 segundos
+            document.body.appendChild(corazon);
+
+            setTimeout(() => {
+                corazon.remove();
+            }, 4000);
+        }
+    </script>
+</body>
+</html>
